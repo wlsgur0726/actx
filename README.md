@@ -1,6 +1,7 @@
 # actx
 async context
-	var actx = require('../');
+
+	var actx = require('actx');
 
 	function SomeAsyncTask(fn)
 	{
