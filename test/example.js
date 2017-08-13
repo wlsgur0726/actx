@@ -1,11 +1,11 @@
-﻿var jsctx = require('../');
+﻿var actx = require('../');
 
 function SomeAsyncTask(fn)
 {
 	setTimeout(fn, 100);
 }
 
-jsctx.Start([
+actx.Start([
 	function(ctx)
 	{
 		console.log('ctx 1 ' + ctx.myCustomData);
