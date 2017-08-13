@@ -1,0 +1,26 @@
+{
+  "name": "actx",
+  "version": "1.0.1",
+  "description": "async context",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/example.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wlsgur0726/actx.git"
+  },
+  "keywords": [
+    "async",
+    "context"
+  ],
+  "author": "Karpediem",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wlsgur0726/actx/issues"
+  },
+  "homepage": "https://github.com/wlsgur0726/actx#readme"
+}
