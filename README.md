@@ -52,3 +52,12 @@ async context
 			return true;
 		},
 	]);
+	
+	// ---- Result ----
+	// ctx 1 undefined
+	// ctx 2 1
+	// PushFront 2
+	// ctx 3 2
+	// async task 3
+	// ctx 4 3
+	// PushBack 4
