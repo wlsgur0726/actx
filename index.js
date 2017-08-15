@@ -1,19 +1,15 @@
 function CtxObj(tasks)
 {
 	this.m_tasks = tasks;
-	this.m_disabled = false;
 }
 
 CtxObj.prototype.Next = function()
 {
-	if (this.m_disabled)
-		throw 'disabled context';
-	if (this.m_tasks.length == 0)
-		return this;
-	var task = this.m_tasks.shift();
-	if (task(this))
-		setImmediate(function(ctx){ctx.Next();}, this);
-	return this;
+	setImmediate(function(ctx) {
+		var task = ctx.m_tasks.shift();
+		if (task)
+			task(ctx);
+	}, this);
 };
 
 CtxObj.prototype.PushFront = function(task)
@@ -26,9 +22,8 @@ CtxObj.prototype.PushBack = function(task)
 	this.m_tasks.push(task);
 };
 
-CtxObj.prototype.Disable = function()
+CtxObj.prototype.Dispose = function()
 {
-	this.m_disabled = true;
 	this.m_tasks = [];
 }
 
