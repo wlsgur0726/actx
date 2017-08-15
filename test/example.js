@@ -42,3 +42,13 @@ actx.Start([
 		return ctx.Next();
 	},
 ]);
+
+/**** Result ****
+ctx 1 undefined
+ctx 2 1
+async task 2
+ctx 3 2
+PushFront 3
+ctx 4 3
+PushBack 4
+*/
