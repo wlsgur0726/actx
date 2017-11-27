@@ -1,34 +1,58 @@
-function CtxObj(tasks)
-{
+function CtxObj(tasks, onFin){
 	this.m_tasks = tasks;
+	this.m_onFin = onFin;
 }
 
-CtxObj.prototype.Next = function()
-{
-	setImmediate(function(ctx) {
+function CallOnFin(err, ctx){
+	ctx.Dispose();
+	if (ctx.m_onFin){
+		ctx.m_onFin(err, ctx);
+		ctx.m_onFin = null;
+	}
+	else if (err) {
+		throw err;
+	}
+}
+
+CtxObj.prototype.Next = function(){
+	setImmediate(function(ctx){
 		var task = ctx.m_tasks.shift();
-		if (task)
-			task(ctx);
+		if (task) {
+			try {task(ctx);} catch(e){CallOnFin(e, ctx);}
+		}
+		else {
+			CallOnFin(null, ctx);
+		}
 	}, this);
+	return this;
 };
 
-CtxObj.prototype.PushFront = function(task)
-{
-	this.m_tasks.unshift(task);
+CtxObj.prototype.PushFront = function(task){
+	this.m_tasks = task.concat(this.m_tasks);
+	return this;
 };
 
-CtxObj.prototype.PushBack = function(task)
-{
-	this.m_tasks.push(task);
+CtxObj.prototype.PushBack = function(task){
+	this.m_tasks = this.m_tasks.concat(task);
+	return this;
 };
 
-CtxObj.prototype.Dispose = function()
-{
+CtxObj.prototype.Dispose = function(){
 	this.m_tasks = [];
-}
+};
 
-exports.Start = function(tasks)
-{
+CtxObj.prototype.Error = function(err){
+	CallOnFin(err, this);
+	return this;
+};
+
+CtxObj.prototype.OnFin = function(onFin){
+	this.m_onFin = onFin;
+	return this;
+};
+
+exports.Start = function(tasks){
 	var ctx = new CtxObj(tasks);
 	ctx.Next();
+	return ctx;
 }
