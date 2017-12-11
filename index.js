@@ -6,8 +6,9 @@ function CtxObj(tasks, onFin){
 function CallOnFin(err, ctx){
 	ctx.Dispose();
 	if (ctx.m_onFin){
-		ctx.m_onFin(err, ctx);
+		var onFin = ctx.m_onFin;
 		ctx.m_onFin = null;
+		onFin(err, ctx);
 	}
 	else if (err) {
 		throw err;
