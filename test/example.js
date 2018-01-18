@@ -1,6 +1,6 @@
 ﻿var actx = require('../');
 
-actx.Start([
+actx.Start(
 	function(ctx){
 		console.log('ctx 1 ' + ctx.myCustomData);
 		//throw Error('exception test');
@@ -44,8 +44,8 @@ actx.Start([
 	function(ctx){
 		console.log('ctx 4 ' + ctx.myCustomData++);
 		return ctx.Next();
-	},
-])
+	}
+)
 .OnFin(function(err, ctx){
 	console.log('OnFin ' + ctx.myCustomData);
 	console.log(err ? err.stack : 'success');

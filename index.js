@@ -1,6 +1,5 @@
-function CtxObj(tasks, onFin){
+function CtxObj(tasks){
 	this.m_tasks = tasks;
-	this.m_onFin = onFin;
 }
 
 function CallOnFin(err, ctx){
@@ -52,7 +51,12 @@ CtxObj.prototype.OnFin = function(onFin){
 	return this;
 };
 
-exports.Start = function(tasks){
+exports.Start = function(){
+	var tasks;
+	if (arguments.length==1 && Array.isArray(arguments[0]))
+		tasks = arguments[0];
+	else
+		tasks = [...arguments];
 	var ctx = new CtxObj(tasks);
 	ctx.Next();
 	return ctx;
